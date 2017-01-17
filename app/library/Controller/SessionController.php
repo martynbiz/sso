@@ -7,11 +7,12 @@ class SessionController extends BaseController
 {
     public function login($request, $response, $args)
     {
+        $container = $this->getContainer();
+
         // if errors found from post, this will contain data
         $params = $request->getParams();
 
         // if authenticated, return to the homepage
-        $container = $this->getContainer();
         if ($container->get('auth')->isAuthenticated()) {
             return $this->redirect('/');
         }

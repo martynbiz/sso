@@ -23,7 +23,9 @@
         "martynbiz/php-flash-message": "^1.0",
         "martynbiz/php-validator": "^1.2",
         "robmorgan/phinx": "^0.6.5",
-        "foil/foil": "^0.6.6"
+        "foil/foil": "^0.6.6",
+        "league/oauth2-server": "^5.1",
+        "zendframework/zend-diactoros": "^1.3"
     },
     "require-dev": {
         "phpunit/phpunit": ">=4.8 < 6.0",

@@ -16,6 +16,8 @@ class CreateOauthClientsTable extends AbstractMigration
         $table->addColumn('id', 'string');
         $table->addColumn('secret', 'string');
         $table->addColumn('name', 'string');
+        $table->addColumn('redirect_uri', 'string');
+        $table->addColumn('is_confidential', 'boolean');
 
         // $table->string('id');
         // $table->string('secret');

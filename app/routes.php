@@ -12,3 +12,7 @@ $app->delete('/logout', '\App\Controller\SessionController:delete')->setName('lo
 // user routes
 $app->get('/register', '\App\Controller\UsersController:register')->setName('register');
 $app->post('/register', '\App\Controller\UsersController:post')->setName('register_post');
+
+// oauth routes
+$app->get('/oauth/authorize', '\App\Controller\OauthController:authorize')->setName('oauth_authorize');
+$app->post('/oauth/access_token', '\App\Controller\OauthController:accessToken')->setName('oauth_access_token');

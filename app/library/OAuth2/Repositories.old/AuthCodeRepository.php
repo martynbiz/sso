@@ -1,0 +1,126 @@
+<?php
+
+namespace App\OAuth2\Repositories;
+
+// use Illuminate\Database\Capsule\Manager as Capsule;
+// use League\OAuth2\Server\Entity\AuthCodeEntity;
+// use League\OAuth2\Server\Entity\ScopeEntity;
+// use League\OAuth2\Server\Repositories\AbstractRepository;
+use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
+use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
+
+class AuthCodeRepository implements AuthCodeRepositoryInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getNewAuthCode()
+    {
+        throw new \Exception('need to impement getNewAuthCode');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity)
+    {
+        throw new \Exception('need to impement persistNewAuthCode');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function revokeAuthCode($codeId)
+    {
+        throw new \Exception('need to impement revokeAuthCode');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isAuthCodeRevoked($codeId)
+    {
+        throw new \Exception('need to impement isAuthCodeRevoked');
+    }
+
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function get($code)
+    // {
+    //     $result = Capsule::table('oauth_auth_codes')
+    //                         ->where('auth_code', $code)
+    //                         ->where('expire_time', '>=', time())
+    //                         ->get();
+    //
+    //     if (count($result) === 1) {
+    //         $token = new AuthCodeEntity($this->server);
+    //         $token->setId($result[0]->auth_code);
+    //         $token->setRedirectUri($result[0]->client_redirect_uri);
+    //         $token->setExpireTime($result[0]->expire_time);
+    //
+    //         return $token;
+    //     }
+    //
+    //     return;
+    // }
+    //
+    // public function create($token, $expireTime, $sessionId, $redirectUri)
+    // {
+    //     Capsule::table('oauth_auth_codes')
+    //                 ->insert([
+    //                     'auth_code'     =>  $token,
+    //                     'client_redirect_uri'  =>  $redirectUri,
+    //                     'session_id'    =>  $sessionId,
+    //                     'expire_time'   =>  $expireTime,
+    //                 ]);
+    // }
+    //
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function getScopes(AuthCodeEntity $token)
+    // {
+    //     $result = Capsule::table('oauth_auth_code_scopes')
+    //                                 ->select(['oauth_scopes.id', 'oauth_scopes.description'])
+    //                                 ->join('oauth_scopes', 'oauth_auth_code_scopes.scope', '=', 'oauth_scopes.id')
+    //                                 ->where('auth_code', $token->getId())
+    //                                 ->get();
+    //
+    //     $response = [];
+    //
+    //     if (count($result) > 0) {
+    //         foreach ($result as $row) {
+    //             $scope = (new ScopeEntity($this->server))->hydrate([
+    //                 'id'            =>  $row['id'],
+    //                 'description'   =>  $row['description'],
+    //             ]);
+    //             $response[] = $scope;
+    //         }
+    //     }
+    //
+    //     return $response;
+    // }
+    //
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function associateScope(AuthCodeEntity $token, ScopeEntity $scope)
+    // {
+    //     Capsule::table('oauth_auth_code_scopes')
+    //                 ->insert([
+    //                     'auth_code' =>  $token->getId(),
+    //                     'scope'     =>  $scope->getId(),
+    //                 ]);
+    // }
+    //
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function delete(AuthCodeEntity $token)
+    // {
+    //     Capsule::table('oauth_auth_codes')
+    //                 ->where('auth_code', $token->getId())
+    //                 ->delete();
+    // }
+}

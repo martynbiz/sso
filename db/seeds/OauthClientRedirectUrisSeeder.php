@@ -8,16 +8,8 @@ class OauthClientRedirectUrisSeeder extends AbstractSeed
     {
         $data = array(
             array(
-                'client_id'    => 'japantravel',
-                'redirect_uri' => 'japantravel.com',
-            ),
-            array(
-                'client_id'    => 'japantravel',
-                'redirect_uri' => 'jt2.staging.metroworks.co.jp',
-            ),
-            array(
-                'client_id'    => 'japantravel',
-                'redirect_uri' => 'jt.martyndev',
+                'client_id'    => 'oeco',
+                'redirect_uri' => 'o-eco.vagrant',
             ),
         );
 

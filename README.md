@@ -45,5 +45,5 @@ TODO
 * auto escaping
 * tests working in vagrant - try converting old jt_sso to foil and new tests (not martynbiz/controller) and testing in vagrant
 
-* modules
+* modules - auth, oauth2 (oauth2 is a seperate module from auth)
 * http://www.tutorialspoint.com/foundation/

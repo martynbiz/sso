@@ -103,6 +103,101 @@ $container['mail_manager'] = function ($c) {
 };
 
 
+
+use League\OAuth2\Server\AuthorizationServer;
+
+use App\OAuth2\Repositories\SessionRepository;
+use App\OAuth2\Repositories\AccessTokenRepository;
+use App\OAuth2\Repositories\RefreshTokenRepository;
+use App\OAuth2\Repositories\ClientRepository;
+use App\OAuth2\Repositories\ScopeRepository;
+use App\OAuth2\Repositories\AuthCodeRepository;
+use League\OAuth2\Server\Grant\AuthCodeGrant;
+// use App\OAuth2\Grant\RefreshTokenGrant;
+// use App\OAuth2\Grant\ClientCredentialsGrant;
+
+// A server which issues access tokens after successfully authenticating a client
+// and resource owner, and authorizing the request.
+$container['authorization_server'] = function ($c) {
+
+    // Init our repositories
+    $clientRepository = new ClientRepository();
+    $scopeRepository = new ScopeRepository();
+    $accessTokenRepository = new AccessTokenRepository();
+    $authCodeRepository = new AuthCodeRepository();
+    $refreshTokenRepository = new RefreshTokenRepository();
+
+    $privateKey = realpath(APPLICATION_PATH . '/../storage/id_rsa');
+    $publicKey = realpath(APPLICATION_PATH . '/../storage/id_rsa.pub');
+
+    // Setup the authorization server
+    $server = new AuthorizationServer(
+        $clientRepository,
+        $accessTokenRepository,
+        $scopeRepository,
+        $privateKey,
+        $publicKey
+    );
+
+    $grant = new AuthCodeGrant(
+        $authCodeRepository,
+        $refreshTokenRepository,
+        // authorization codes will expire after 10 minutes
+        new \DateInterval('PT10M')
+    );
+    // refresh tokens will expire after 1 month
+    $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+
+    // Enable the authentication code grant on the server
+    $server->enableGrantType(
+        $grant,
+        // access tokens will expire after 1 hour
+        new \DateInterval('PT1H')
+    );
+
+    return $server;
+
+    // $server = new \League\OAuth2\Server\AuthorizationServer();
+    //
+    // // the oauth2-server we're using requires these objects for managing storage
+    // // of oauth items such as tokens
+    // $server->setSessionStorage(new \App\OAuth2\Storage\SessionStorage());
+    // $server->setAccessTokenStorage(new \App\OAuth2\Storage\AccessTokenStorage());
+    // $server->setRefreshTokenStorage(new \App\OAuth2\Storage\RefreshTokenStorage());
+    // $server->setClientStorage(new \App\OAuth2\Storage\ClientStorage());
+    // $server->setScopeStorage(new \App\OAuth2\Storage\ScopeStorage());
+    // $server->setAuthCodeStorage(new \App\OAuth2\Storage\AuthCodeStorage());
+    //
+    // // add a couple of grants for this server
+    // $server->addGrantType( new \App\OAuth2\Grant\AuthCodeGrant() );
+    // $server->addGrantType( new \App\OAuth2\Grant\RefreshTokenGrant() );
+    // $server->addGrantType( new \App\OAuth2\Grant\ClientCredentialsGrant() );
+    //
+    // return $server;
+};
+
+// A server which sits in front of protected resources
+// (for example “tweets”, users’ photos, or personal data)
+// and is capable of accepting and responsing to protected
+// resource requests using access tokens.
+$container['resource_server'] = function ($c) {
+
+    $sessionStorage = new \App\OAuth2\Storage\SessionStorage();
+    $accessTokenStorage = new \App\OAuth2\Storage\AccessTokenStorage();
+    $clientStorage = new \App\OAuth2\Storage\ClientStorage();
+    $scopeStorage = new \App\OAuth2\Storage\ScopeStorage();
+
+    $server = new \League\OAuth2\Server\ResourceServer(
+        $sessionStorage,
+        $accessTokenStorage,
+        $clientStorage,
+        $scopeStorage
+    );
+
+    return $server;
+};
+
+
 // Models
 
 // initiate database connection
