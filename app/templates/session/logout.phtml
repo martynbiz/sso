@@ -4,13 +4,13 @@
     <div class="col-sm-6 col-sm-offset-3 sso-login">
         <div class="row">
         	<div class="col-xs-12">
-                <form class="well text-center" method="post" action="/session">
-                    <p>You are currently logged in to JapanTravel. Please click below to logout:</p>
+                <form id="logout_form" class="well text-center" method="post" action="<?= $this->pathFor('logout_post') ?>">
+                    <p>You are currently logged in. Please click below to logout:</p>
 
                     <input type="hidden" name="_METHOD" value="DELETE">
 
-                    <?php if(isset($params['returnTo'])): ?>
-                        <input type="hidden" name="returnTo" value="<?= $params['returnTo'] ?>">
+                    <?php if(isset($this->params['returnTo'])): ?>
+                        <input type="hidden" name="returnTo" value="<?= $this->params['returnTo'] ?>">
                     <?php endif; ?>
 
                     <button class="btn btn-default">Logout</button>

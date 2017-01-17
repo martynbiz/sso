@@ -5,14 +5,14 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="well">
-                    <form method="post" action="<?= $this->pathFor('login_post') ?>">
+                    <form id="login_form" method="post" action="<?= $this->pathFor('login_post') ?>">
                         <div class="form-group">
-                            <span class="sr-only"><?= $this->translate('username') ?></span>
-                            <input type="text" class="form-control" name="email" placeholder="<?= $this->translate('username') ?>" value="<?php $params['email'] ?>">
+                            <label class="sr-only"><?= $this->translate('username') ?></label>
+                            <input type="text" class="form-control" name="email" placeholder="<?= $this->translate('username') ?>" value="<?= @$this->params['email'] ?>">
                         </div>
 
                         <div class="form-group" style="position: relative;">
-                            <span class="sr-only"><?= $this->translate('password') ?></span>
+                            <label class="sr-only"><?= $this->translate('password') ?></label>
                             <input  type="password" class="form-control" name="password" placeholder="<?= $this->translate('password') ?>" value="">
                             <a style="position: absolute; top: 10px; right: 20px;" href="/accounts/resetpassword"><?= $this->translate('forgot_password') ?></a>
                         </div>
@@ -62,8 +62,8 @@
                             </div>
                         </div>
 
-                        <?php if(isset($params['returnTo'])): ?>
-                            <input type="hidden" name="returnTo" value="<?= $params['returnTo'] ?>">
+                        <?php if(isset($this->params['returnTo'])): ?>
+                            <input type="hidden" name="returnTo" value="<?= $this->params['returnTo'] ?>">
                         <?php endif ?>
                     </form>
                 </div>

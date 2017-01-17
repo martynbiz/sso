@@ -7,13 +7,18 @@ class SessionController extends BaseController
 {
     public function login($request, $response, $args)
     {
-        // if authenticated, return to the homepage 
+        // if errors found from post, this will contain data
+        $params = $request->getParams();
+
+        // if authenticated, return to the homepage
         $container = $this->getContainer();
         if ($container->get('auth')->isAuthenticated()) {
             return $this->redirect('/');
         }
 
-        return $this->render('session/login');
+        return $this->render('session/login', [
+            'params' => $params,
+        ]);
 
         // // check for remember me cookie.
         // // if the auth_token (remember me) cookie is set, and the user is not
@@ -157,54 +162,85 @@ class SessionController extends BaseController
         // }
     }
 
-    // /**
-    //  * POST /session -- login
-    //  */
-    // public function post($request, $response, $args)
-    // {
-    //     // GET and POST
-    //     $params = $request->getParams();
-    //     $container = $this->getContainer();
-    //     $settings = $container->get('settings');
-    //
-    //     // authentice with the email (might even be username, which is fine) and pw
-    //     if ($container->get('auth')->authenticate($params['email'], $params['password'])) {
-    //
-    //         // as authentication has passed, get the user by email OR username
-    //         $user = $container->get('model.user')
-    //             ->where('email', $params['email'])
-    //             ->orWhere('username', $params['email'])
-    //             ->first();
-    //
-    //         // if requested (remember me checkbox), create remember me token cookie
-    //         // else, remove the cookie (if exists)
-    //         if (isset($params['remember_me'])) {
-    //             $container->get('auth')->remember($user);
-    //         } else {
-    //             $container->get('auth')->forget($user);
-    //         }
-    //
-    //         // set attributes. valid_attributes will only set the fields we
-    //         // want to be avialable (e.g. not password)
-    //         $container->get('auth')->setAttributes($user->toArray());
-    //         // array_merge($user->toArray(), array(
-    //         //     'backend' => User::BACKEND_JAPANTRAVEL,
-    //         // )) );
-    //
-    //         // redirect back to returnTo, or /session (logout page - default) if not provided
-    //         isset($params['returnTo']) or $params['returnTo'] = $settings->get('defaultLoginRedirect', '/');
-    //         return $this->returnTo($params['returnTo']);
-    //
-    //     } else {
-    //
-    //         // forward them to the login page with errors to try again
-    //         $container->get('flash')->addMessage('errors', array(
-    //             $container->get('i18n')->translate('invalid_username_password'),
-    //         ));
-    //
-    //         return $this->forward('login', func_get_args());
-    //
-    //     }
-    // }
+    /**
+     * POST /session -- login
+     */
+    public function post($request, $response, $args)
+    {
+        // GET and POST
+        $params = $request->getParams();
+        $container = $this->getContainer();
+        $settings = $container->get('settings');
+
+        // authentice with the email (might even be username, which is fine) and pw
+        if ($container->get('auth')->authenticate($params['email'], $params['password'])) {
+
+            // as authentication has passed, get the user by email OR username
+            $user = $container->get('model.user')
+                ->where('email', $params['email'])
+                ->orWhere('username', $params['email'])
+                ->first();
+
+            // if requested (remember me checkbox), create remember me token cookie
+            // else, remove the cookie (if exists)
+            if (isset($params['remember_me'])) {
+                $container->get('auth')->remember($user);
+            } else {
+                $container->get('auth')->forget($user);
+            }
+
+            // set attributes. valid_attributes will only set the fields we
+            // want to be avialable (e.g. not password)
+            $container->get('auth')->setAttributes($user->toArray());
+
+            // redirect back to returnTo, or /session (logout page - default) if not provided
+            isset($params['returnTo']) or $params['returnTo'] = $settings->get('defaultLoginRedirect', '/');
+            return $this->returnTo($params['returnTo']);
+
+        } else {
+
+            // forward them to the login page with errors to try again
+            $container->get('flash')->addMessage('errors', array(
+                $container->get('i18n')->translate('invalid_username_password'),
+            ));
+
+            return $this->forward('login', func_get_args());
+
+        }
+    }
+
+    public function logout($request, $response, $args)
+    {
+        // if authenticated, return to the homepage
+        $container = $this->getContainer();
+        if (!$container->get('auth')->isAuthenticated()) {
+            return $this->redirect('/');
+        }
+
+        return $this->render('session/logout');
+    }
+
+    public function delete($request, $response, $args)
+    {
+        // combine GET and POST params
+        $params = $request->getParams();
+        $container = $this->getContainer();
+        $settings = $container->get('settings');
+
+        // // also, delete any auth_token we have for the user and cookie
+        // $user = $this->getCurrentUser();
+        // if ($user) {
+        //     $container->get('auth')->forget($user);
+        // } else { // just delete cookie then - if exists
+        //     $container->get('auth')->deleteAuthTokenCookie();
+        // }
+
+        // this will effective end the "session" by clearning out the session vars
+        $container->get('auth')->clearAttributes();
+
+        // redirect back to returnTo, or /session (logout page) if not provided
+        isset($params['returnTo']) or $params['returnTo'] = $settings->get('defaultLogoutRedirect', '/');
+        return $this->returnTo($params['returnTo']);
+    }
 
 }

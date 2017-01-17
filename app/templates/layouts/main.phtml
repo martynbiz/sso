@@ -22,10 +22,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <?php if ($this->currentUser): ?>
                         <li class="dropdown">
+                            <form id="logout_form_navbar" method="post" action="<?= $this->pathFor('logout_post') ?>"><input type="hidden" name="_METHOD" value="DELETE"></form>
+
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $this->currentUser->first_name ?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#" onclick="$('form#deleteSession').submit(); return false;">Logout</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                <li><a href="<?= $this->pathFor('logout') ?>" onclick="$('form#delete_form').submit(); return false;"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             </ul>
                         </li>
                     <?php else: ?>

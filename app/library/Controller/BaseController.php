@@ -10,6 +10,11 @@ class BaseController
      */
     protected $container;
 
+    /**
+     * @var App\Model\User
+     */
+    protected $currentUser;
+
     //
     public function __construct(Container $container) {
        $this->container = $container;
@@ -35,7 +40,7 @@ class BaseController
     {
         $container = $this->getContainer();
 
-        // // $data['currentUser'] = $container->get('auth')->getCurrentUser();
+        $data['currentUser'] = $this->getCurrentUser();
 
         if ($container->has('flash')) {
             $data['messages'] = $container->get('flash')->flushMessages();
@@ -59,6 +64,21 @@ class BaseController
         $response->getBody()->write($html);
 
         return $response;
+    }
+
+    /**
+     * Get the current sign in user user
+     */
+    protected function getCurrentUser()
+    {
+        // cache current user as a property
+        if (! $this->currentUser) {
+            $container = $this->getContainer();
+            $attributes = $container->get('auth')->getAttributes();
+            $this->currentUser =  $container->get('model.user')->findByEmail($attributes['email']);
+        }
+
+        return $this->currentUser;
     }
 
     /**

@@ -4,10 +4,24 @@
 
 ## Install the Application ##
 
-git clone
-composer install
-phinx migrate --environment development
-phinx migrate --environment testing
+```
+$ git clone ... sso
+$ cd sso
+$ composer install
+$ chgrp
+```
+
+SSOAuth uses Vagrant for development to make installation simple. Please install Vagrant for this purpose. Otherwise, please refer to the /provision.sh script to understand dependencies required for other installations.
+
+```
+$ vagrant up
+```
+
+Add the following to /etc/hosts
+
+```
+...     sso.vagrant
+```
 
 ## Testing ##
 

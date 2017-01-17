@@ -36,6 +36,21 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     protected $app = null;
 
     /**
+     * @var App\Model\User
+     */
+    protected $user = null;
+
+    // /**
+    //  * @var App\Model\Meta
+    //  */
+    // protected $meta = null;
+    //
+    // /**
+    //  * @var App\Model\Meta
+    //  */
+    // protected $recoveryToken = null;
+
+    /**
      * We wanna also build $app so that we can gain access to container
      */
     public function setUp()
@@ -52,13 +67,15 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         // In some cases, where services have become "frozen", we need to define
         // mocks before they are loaded
 
+        $container = $app->getContainer();
+
         //  auth service
-        $this->container['auth'] = $this->getMockBuilder('App\\Auth\\Auth')
+        $container['auth'] = $this->getMockBuilder('App\\Auth\\Auth')
             ->disableOriginalConstructor()
             ->getMock();
 
         //  auth service
-        $this->container['mail_manager'] = $this->getMockBuilder('App\\Mail\\Manager')
+        $container['mail_manager'] = $this->getMockBuilder('App\\Mail\\Manager')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -71,6 +88,30 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         require __DIR__ . '/../../app/routes.php';
 
         $this->app = $app;
+
+        // fill db with test data
+
+        $this->user = User::create([
+            'first_name' => 'Martyn',
+            'last_name' => 'Bissett',
+            'name' => 'Martyn Bissett',
+            'username' => 'martyn',
+            'email' => 'martyn@example.com',
+            'password' => 'password1',
+        ]);
+
+        $this->user = Meta::create([
+            'user_id' => $this->user->id,
+            'name' => 'facebook_id',
+            'value' => '1234567890',
+        ]);
+
+        $this->user = RecoveryToken::create([
+            'user_id' => $this->user->id,
+            'selector' => '1234567890',
+            'token' => 'qwertyuiop1234567890',
+            'expire' => date('Y-m-d H:i:s', strtotime("+3 months", time())),
+        ]);
     }
 
     public function tearDown()
@@ -148,6 +189,19 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         // Return the response
         return $response;
     }
+
+    // public function login($user)
+    // {
+    //     // return an identity (eg. email)
+    //     $this->container['auth']
+    //         ->method('getAttributes')
+    //         ->willReturn( $user->toArray() );
+    //
+    //     // by defaut, we'll make isAuthenticated return a false
+    //     $this->container['auth']
+    //         ->method('isAuthenticated')
+    //         ->willReturn(true);
+    // }
 
     // /**
     //  * Assert response is a redirect
