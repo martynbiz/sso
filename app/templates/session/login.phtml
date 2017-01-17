@@ -1,0 +1,73 @@
+<?php $this->layout('layouts/main'); ?>
+
+<?php $this->section('content') ?>
+    <div class="col-sm-6 col-sm-offset-3 sso-login">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="well">
+                    <form method="post" action="<?= $this->pathFor('login_post') ?>">
+                        <div class="form-group">
+                            <span class="sr-only"><?= $this->translate('username') ?></span>
+                            <input type="text" class="form-control" name="email" placeholder="<?= $this->translate('username') ?>" value="<?php $params['email'] ?>">
+                        </div>
+
+                        <div class="form-group" style="position: relative;">
+                            <span class="sr-only"><?= $this->translate('password') ?></span>
+                            <input  type="password" class="form-control" name="password" placeholder="<?= $this->translate('password') ?>" value="">
+                            <a style="position: absolute; top: 10px; right: 20px;" href="/accounts/resetpassword"><?= $this->translate('forgot_password') ?></a>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button class="btn btn-lg btn-primary btn-block btn-login" type="submit">
+                                    <?= $this->translate('login_button') ?>
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="<?= $this->pathFor('register') ?>" class="btn btn-lg btn-default btn-block btn-signup">
+                                    <?= $this->translate('register_button') ?>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row sso-loginOr">
+                            <div class="col-xs-12">
+                                <hr class="sso-hrOr">
+                                <span class="sso-spanOr">or</span>
+                            </div>
+                        </div>
+
+                        <h3 class="text-center"><?= $this->translate('signin_with_social_media') ?></h3>
+
+                        <ul class="sm-icons">
+                            <li>
+                                <button type="submit" formaction="/session/facebook" class="btn btn-circle btn-xl btn-facebook"><i class="fa fa-facebook"></i></button></li>
+                            <li>
+                                <button href="http://linkedin.com/" class="btn btn-circle btn-xl btn-linkedin"><i class="fa fa-linkedin"></i></button></li>
+                            <li>
+                                <button href="http://twitter.com/" class="btn btn-circle btn-xl btn-twitter"><i class="fa fa-twitter"></i></button></li>
+                            <li>
+                                <button href="http://plus.google.com/" class="btn btn-circle btn-xl btn-google-plus"><i class="fa fa-google-plus"></i> </button></li>
+                        </ul>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label><input type="checkbox" name="remember_me" value="1" checked="checked"> <?= $this->translate('remember_me') ?></label>
+                            </div>
+                        </div>
+
+                        <?php if(isset($params['returnTo'])): ?>
+                            <input type="hidden" name="returnTo" value="<?= $params['returnTo'] ?>">
+                        <?php endif ?>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $this->replace() ?>

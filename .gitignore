@@ -1,0 +1,7 @@
+/vendor/
+/logs/*
+!/logs/README.md
+*.log
+storage/
+phinx.yml
+node_modules/

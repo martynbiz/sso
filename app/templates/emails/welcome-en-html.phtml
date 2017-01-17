@@ -1,0 +1,14 @@
+<?php $this->layout('layouts/main'); ?>
+
+<?php $this->section('content') ?>
+    <p>Hello <?= $this->user->first_name ?>,</p>
+
+    <p>The following username will allow you to login:</p>
+
+    <p>Username: <?= $this->user->username ?></p>
+
+    <p>Looking forward to seeing you around the site!</p>
+
+    <p>Sincerely,<br>
+    SSO Team</p>
+<?php $this->replace() ?>

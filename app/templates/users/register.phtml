@@ -1,0 +1,65 @@
+<?php $this->layout('layouts/main', [
+    'title' => 'Register',
+]); ?>
+
+<?php $this->section('content') ?>
+    <div class="col-sm-6 col-sm-offset-3 sso-register">
+        <div class="row">
+        	<div class="col-xs-12">
+                <div class="well">
+                    <form id="register_form" method="post" action="<?= $this->pathFor('register_post') ?>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="first_name" class="sr-only"><?= $this->translate('first_name') ?></label>
+                                    <input type="text" class="form-control" name="first_name" placeholder="<?= $this->translate('first_name') ?>" value="<?= @$this->params['first_name'] ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="last_name" class="sr-only"><?= $this->translate('last_name') ?></label>
+                                    <input type="text" class="form-control" name="last_name" placeholder="<?= $this->translate('last_name') ?>" value="<?= @$this->params['last_name'] ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="sr-only"><?= $this->translate('email') ?></label>
+                            <input type="text" class="form-control" name="email" placeholder="<?= $this->translate('email') ?>" value="<?= @$this->params['email'] ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="sr-only"><?= $this->translate('password') ?></label>
+                            <input type="password" class="form-control" name="password" placeholder="<?= $this->translate('password') ?>" value="">
+                        </div>
+
+                        <label class="checkbox-inline agreement">
+                            <input name="agreement" type="checkbox"> <?= $this->translate('read_tc_agreement') ?>
+                        </label>
+
+                        <input type="text" class="more_info" name="more_info" value="" style="position: absolute; left: -9999px">
+
+                        <?php if(isset($this->params['source'])): ?>
+                            <input type="hidden" name="source" value="<?= $this->params['source'] ?>">
+                        <?php endif ?>
+
+                        <?php if(isset($this->params['returnTo'])): ?>
+                            <input type="hidden" name="returnTo" value="<?= $this->params['returnTo'] ?>">
+                        <?php endif ?>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a href="<?= $this->pathFor('login') ?>" class="btn btn-lg btn-block btn-default" type="submit"><?= $this->translate('have_an_account_button') ?></a>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-lg btn-block btn-primary"><?= $this->translate('register_button') ?></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $this->replace() ?>
