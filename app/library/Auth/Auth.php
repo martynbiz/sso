@@ -83,13 +83,16 @@ class Auth
      */
     public function setAttributes($attributes)
     {
-        // ensure that whitelist is set
-        if (! isset($this->settings['valid_attributes'])) {
-            throw new Exception('valid_attributes must be set in settings');
-        }
-
-        // filter attributes based on valid_attributes
-        $attributes = array_intersect_key($attributes, array_flip($this->settings['valid_attributes']));
+        // filter attributes
+        $attributes = array_intersect_key($attributes, array_flip([
+            'first_name',
+            'last_name',
+            'email',
+            'username',
+            'name',
+            'id',
+            'facebook_id', // TODO put this in a meta array 
+        ]));
 
         // first of all, clear attributes
         $this->clearAttributes();

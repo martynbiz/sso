@@ -43,11 +43,11 @@ sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql php-curl php
 sudo bash -c 'cat <<EOT >>/etc/apache2/sites-available/sso.conf
 <VirtualHost *:80>
     ServerName sso.vagrant
-    DocumentRoot /var/www/sso/website/public
+    DocumentRoot /var/www/sso
 
     SetEnv APPLICATION_ENV "development"
 
-    <Directory /var/www/sso/website/public/>
+    <Directory /var/www/sso/>
         Options FollowSymLinks
         AllowOverride All
     </Directory>
@@ -68,11 +68,14 @@ echo "create database sso_dev" | mysql -u root -p$MYSQL_ROOT_PASSWORD
 echo "create database sso_test" | mysql -u root -p$MYSQL_ROOT_PASSWORD
 
 # run migrations
-cd /var/www/sso/website
+cd /var/www/sso
 vendor/bin/phinx migrate --environment development
 vendor/bin/phinx migrate --environment testing
+vendor/bin/phinx seed:run --environment development
+vendor/bin/phinx seed:run --environment testing
 
 # create ssh keys
-cd /var/www/sso/website
-ssh-keygen -f storage/id_rsa -t rsa -N ''
-sudo chmod g+r storage/id_rsa
+cd /var/www/sso
+openssl genpkey -algorithm RSA -out storage/private.pem -pkeyopt rsa_keygen_bits:2048
+openssl rsa -pubout -in storage/private.pem -out storage/public.pem
+# sudo chmod g+r storage/id_rsa

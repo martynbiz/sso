@@ -8,7 +8,7 @@ class UsersController extends BaseController
 {
     public function register($request, $response, $args)
     {
-        // if errors found from post, this will contain data 
+        // if errors found from post, this will contain data
         $params = $request->getParams();
 
         return $this->render('users/register', [

@@ -1,1 +1,0 @@
-{"virtualbox":{"/var/www/sso":{"owner":"ubuntu","group":"www-data","guestpath":"/var/www/sso","hostpath":"/var/www/sso","disabled":false,"__vagrantfile":true}}}

@@ -186,4 +186,23 @@ class OauthController extends BaseController
             return $response->withStatus(500)->withBody($body);
         }
     }
+
+    /**
+     * Will validate auth_code to then grant access token
+     * GET /oauth/authorize
+     */
+    public function user($request, $response, $args)
+    {
+        // Add the resource server middleware which will intercept and validate requests
+        // $app->add(
+        //     new \League\OAuth2\Server\Middleware\ResourceServerMiddleware(
+        //         $app->getContainer()->get(ResourceServer::class)
+        //     )
+        // );
+
+        $user = \App\Model\User::first();
+
+        $response->getBody()->write(json_encode($user));
+        return $response->withStatus(200);
+    }
 }

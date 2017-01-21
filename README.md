@@ -20,7 +20,7 @@ $ vagrant up
 Add the following to /etc/hosts
 
 ```
-...     sso.vagrant
+192.168.33.11     sso.vagrant
 ```
 
 ## Testing ##
@@ -40,10 +40,12 @@ $this->assertQueryCount('ul.errors li', 3, (string)$response->getBody());
 
 TODO
 
-* write tests for: register, login,
-* convert blade emails to foil
+* oauth: middleware; o-eco /login cannot access session file;
+* write tests for: oauth
+* convert blade emails to foil - reset,
 * auto escaping
-* tests working in vagrant - try converting old jt_sso to foil and new tests (not martynbiz/controller) and testing in vagrant
+* remember me token? passive login? .. how does it affect seo
+* getMetaAttribute: [ "meta": [ "facebook_id": "1234567890", ... ] ] .. modules can add to these
 
-* modules - auth, oauth2 (oauth2 is a seperate module from auth)
+* modules - auth, oauth2, facebook,  (oauth2 is a seperate module from auth?)
 * http://www.tutorialspoint.com/foundation/

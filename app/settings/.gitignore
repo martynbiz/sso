@@ -1,2 +1,4 @@
-settings-development.php
-settings-testing.php
+*
+!.gitignore
+!settings.php
+!settings-env.php

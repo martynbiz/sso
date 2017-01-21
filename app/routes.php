@@ -16,3 +16,4 @@ $app->post('/register', '\App\Controller\UsersController:post')->setName('regist
 // oauth routes
 $app->get('/oauth/authorize', '\App\Controller\OauthController:authorize')->setName('oauth_authorize');
 $app->post('/oauth/access_token', '\App\Controller\OauthController:accessToken')->setName('oauth_access_token');
+$app->get('/oauth/user', '\App\Controller\OauthController:user')->setName('oauth_user');

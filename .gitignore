@@ -5,3 +5,4 @@
 storage/
 phinx.yml
 node_modules/
+.vagrant

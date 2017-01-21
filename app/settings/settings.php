@@ -1,12 +1,12 @@
 <?php
 $settings = [
     'settings' => [
-        'displayErrorDetails' => false, // set to false in production
+        'displayErrorDetails' => false, // Set to false in production
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
         'eloquent' => [
             'driver' => 'mysql',
-    		'host' => 'localhost',
+            'host' => 'localhost',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
@@ -31,21 +31,20 @@ $settings = [
         // i18n
         'i18n' => [
 
-            // when the target locale is missing a translation/ template this the
+            // When the target locale is missing a translation/ template this the
             // fallback locale to use (probably "en")
             'default_locale' => 'en',
 
-            // this is the type of the translation files using by zend-i18n
+            // This is the type of the translation files using by zend-i18n
             'type' => 'phparray',
 
-            // where the translation files are stored
+            // Where the translation files are stored
             'file_path' => APPLICATION_PATH . '/languages/',
         ],
 
         'auth' => [
 
-            // this is the session namespace. apps that want to authenticate
-            // using this auth app must configure their mwauth-client to match
+            // this is the session namespace
             'namespace' => 'jt_sso__',
 
             // remember me cookie settings
@@ -53,19 +52,6 @@ $settings = [
                 'cookie_name' => 'auth_token',
                 'expire' => strtotime("+3 months", time()), // time in seconds from now, e.g. 1440 = 1h from now
                 'path' => '/',
-            ],
-
-            // these are attributes that will be written to session
-            'valid_attributes' => [
-                'first_name',
-                'last_name',
-                // 'name',
-                'email',
-                'username',
-                'name',
-                'id',
-                'facebook_id',
-                // 'backend',
             ],
 
             'cookie_domain' => null,

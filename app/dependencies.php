@@ -127,8 +127,8 @@ $container['authorization_server'] = function ($c) {
     $authCodeRepository = new AuthCodeRepository();
     $refreshTokenRepository = new RefreshTokenRepository();
 
-    $privateKey = realpath(APPLICATION_PATH . '/../storage/id_rsa');
-    $publicKey = realpath(APPLICATION_PATH . '/../storage/id_rsa.pub');
+    $privateKey = realpath(APPLICATION_PATH . '/../storage/private.pem');
+    $publicKey = realpath(APPLICATION_PATH . '/../storage/public.pem');
 
     // Setup the authorization server
     $server = new AuthorizationServer(
