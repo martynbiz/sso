@@ -47,5 +47,5 @@ TODO
 * remember me token? passive login? .. how does it affect seo
 * getMetaAttribute: [ "meta": [ "facebook_id": "1234567890", ... ] ] .. modules can add to these
 
-* modules - auth, oauth2, facebook,  (oauth2 is a seperate module from auth?)
+* modules - core (renederer, bas controller etc), auth (included auth, make it minimal for custom auth to be build), oauth2 (additional service to auth), facebook (additional service to auth), 
 * http://www.tutorialspoint.com/foundation/
